@@ -1,5 +1,7 @@
 # 🤖 미니 프로젝트 BackEnd 🤖
 
+https://master.d3cc0rzuwb20fh.amplifyapp.com/home
+
 ## 프로젝트 설명
 📷 나의 여행기록 및 추억들을 사진과 글로 앨범에 저장해보자 💾
 
