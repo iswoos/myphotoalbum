@@ -30,10 +30,16 @@ public class FolderRepositoryImpl implements FolderRepositoryCustom {
         QFolderTag folderTag = QFolderTag.folderTag;
 
         List<FolderTag> folderTagList = queryFactory.selectFrom(folderTag) // 폴터태그 모든 것을 리스트에 담는다.
-                //조인단계에서 쿼리 성능 최적화하려면
-                // .leftJoin(folderTag.folder,folder).on(folder.member.eq(member))로 교체 후
-                // where절 멤버조회 제거하면 된다.
+                /*
+         조인단계에서 쿼리 성능 최적화하려면
+           .leftJoin(folderTag.folder,folder).on(folder.member.eq(member))로 교체 후
+           where절 멤버조회 제거하면 된다.
 
+          추가로, or절을 활용하여 search메소드를 안 써도 되는 방법은 아래와 같다.
+          .where(folder.folderName.contains(keyword)
+                  .or(folderTag.tagName.contains(keyword))
+          )
+          */
                 .leftJoin(folderTag.folder,folder).fetchJoin() // 폴더테그의 폴더와 폴더를 leftjoin으로 연걸한다.
                 // fetchJoin을 활용해서 N+1문제를 해결할 수 있다. 폴더태그와 폴더를 함께 조회해서 지연로딩을 X로 만든다.
                 .where(folder.member.eq(member)) //본인 쓴 폴더만 조회 (Q폴더가 매개변수 멤버와 동일한지 조건문)
